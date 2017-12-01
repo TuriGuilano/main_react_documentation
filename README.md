@@ -28,3 +28,45 @@ Undefined, null and booleans are ignored by JSX.
 
 ### Visibility toggle
 
+See src/excercise/visibility.js 
+
+### es6 classes
+
+We can pass argument default values, if no param is being passed we can set
+param equal to a string anonymous. We can also extend a class from an excisting class, this way we inherit all the functionalities and we can also overwrite functionalities if they are missing. 
+
+```
+class Person {
+  constructor(name = 'Anonymous', age = 0) {
+    this.name = name;
+    this.age = age;
+  }
+  // function body
+  getGreeting() {
+    return `Hi, I am ${this.name}`;
+  }
+  getDescription() {
+    return `${this.name} is ${this.age} years old.`
+  }
+}
+
+class Student extends Person {
+  constructor(name, age, major) {
+    // first run the parent's constructor -> Person
+    super(name, age);
+    this.major = major;
+  }
+  hasMajor() {
+    return !!this.major;
+  }
+  getDescription() {
+    return 'testing';
+  }
+}
+
+const me = new Student('Janus', 27, 'Information Studies');
+console.log(me.getDescription());
+
+const other = new Student();
+console.log(other.getDescription());
+```
