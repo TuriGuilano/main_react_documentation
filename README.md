@@ -113,3 +113,35 @@ constructor(props) {
 
 Component state allows our component to manage data and automatically re-render the component. The component is rendered with the component's state default values.
 Our component's state is just a simple object. We can update our component's state by events, fetch API e.g or click functions.
+
+### Passing functions to children
+
+In react you can pass functions to children by passing them as props, e.g:
+
+```
+class Parent extends Component {
+  functionOne() {
+    console.log('im the first function thats being passed down');
+  }
+
+  render() {
+    return (
+      <div>
+        <ChildComponent >
+      </div>
+    )
+  }
+}
+
+class ChildComponent extends Component {
+  render() {
+    return (
+      <div>
+        <button onClick={this.props.functionOne}>Click Me</button>
+      </div>
+    )
+  }
+}
+
+ReactDOM.render(<Parent />, document.getElementById('app));
+```
