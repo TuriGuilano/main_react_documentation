@@ -70,3 +70,44 @@ console.log(me.getDescription());
 const other = new Student();
 console.log(other.getDescription());
 ```
+
+
+### Sending input values from the form to the method
+
+We have to add a handler on the submit of the form and give the input field
+a name which we will call inside the method with the event method, see example:
+
+```
+class addListItem extends Component {
+  addItem(e) {
+    e.preventDefault();
+
+    const option = e.target.elements.option.value.trim;
+    if(option) {
+      console.log(option);
+    }
+  }
+
+  render() {
+    return (
+      <form onSubmit={this.addItem}>
+        <input type="text" name="option" />
+        <button>Add option</button>
+      </form>
+    )
+  }
+}
+```
+
+To be efficient in binding functions to the components props we can call the constructor method which is a method that takes props as a param. Inside the constructor we call super, again with the props as param to set it equal to the props of the parent. After, inside the constructor we bind all the methods that need to have access to the props, eg:
+
+```
+constructor(props) {
+  super(props);
+  // by binding the addItem method we have now access to all the props.
+  this.addItem = this.addItem.bind(this);
+}
+```
+
+### React component Props
+
