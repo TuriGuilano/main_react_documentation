@@ -99,7 +99,7 @@ class addListItem extends Component {
 }
 ```
 
-To be efficient in binding functions to the components props we can call the constructor method which is a method that takes props as a param. Inside the constructor we call super, again with the props as param to set it equal to the props of the parent. After, inside the constructor we bind all the methods that need to have access to the props, eg:
+To be efficient in binding functions to the components props we can call the constructor method which is a method that takes props as a param. We have to call props when we overwrite the props. Inside the constructor we call super, again with the props as param. After, inside the constructor we bind all the methods that need to have access to the props, eg:
 
 ```
 constructor(props) {
@@ -109,5 +109,7 @@ constructor(props) {
 }
 ```
 
-### React component Props
+### React State
 
+Component state allows our component to manage data and automatically re-render the component. The component is rendered with the component's state default values.
+Our component's state is just a simple object. We can update our component's state by events, fetch API e.g or click functions.
