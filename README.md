@@ -145,3 +145,73 @@ class ChildComponent extends Component {
 
 ReactDOM.render(<Parent />, document.getElementById('app));
 ```
+
+### Passing data upstream
+
+To pass data upstream we need to call the parent its function with the data we from the child component, we can do so by:
+
+```
+class Parent extends Component {
+  constructor(props) {
+    super(props);
+    this.getChildData = this.getChildDate.bind(this);
+  }
+
+  getChildData(option) {
+    console.log('im being called', option);
+  }
+
+  render() {
+    return (
+      <div>
+        <ChildComponent getChildData={this.getChildData} />
+      </div>
+    )
+  }
+}
+
+class ChildComponent extends Component {
+  constructor(props) {
+    super(props);
+    this.getChildData this.getChildData.bind(this);
+  }
+
+  getChildData(e) {
+    e.preventDefault();
+
+    const option = e.target.elements.option.value.trim();
+    
+    if(option) {
+      this.props.getChildData(option);
+    }
+  }
+
+  render() {
+    return (
+      <div>
+        <form onSubmit={this.getChildData}>
+          <input type="text" name="option" />
+          <button>Add Option</button>
+        </form>
+      </div>
+    );
+  }
+}
+
+```
+
+### Props vs State
+
+Props: 
+- An object
+- Can be used when rendering
+- Changes (from above) cause re-renders
+- Comes from above
+- Can't be changed by component itself
+
+State:
+- An object
+- Can be used when rendering
+- Changes cause re-renders
+- Defined in component itself
+- Can be changed by component itself
