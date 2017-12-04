@@ -215,3 +215,39 @@ State:
 - Changes cause re-renders
 - Defined in component itself
 - Can be changed by component itself
+
+
+### Stateless functional components
+
+Alternative to our class based components. Stateless functinal components are pure for presentational purposes.
+
+Advantages:
+- SFC are faster, dont come with all the overhead and bage of our class based components
+- easy to write
+- easy to test
+
+You can access props via a SFC by passing them down inside the component (when its called):
+
+```
+const user = (props) => {
+  return (
+    <div>
+      <p>Name: {props.name}</p>
+      <p>Age: {props.age}</p>
+    </div>
+  );
+};
+
+ReactDOM.render(<User name="Janno" age={27} />, document.getElementById('app));
+```
+
+### Default prop values
+
+Default props is an Object which refers to default props when none are given. 
+eg:
+
+```
+MyComponent.DefaultProps = {
+  options: [],
+}
+```
