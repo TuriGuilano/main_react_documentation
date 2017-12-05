@@ -307,3 +307,31 @@ Exaples of lifecycle methods are:
   will fire after state or prop values change.
 - componentWillUnmount()
   allow us to add functionality when a component unmounts
+
+### Saving and loading data
+
+Localstorage only works with string data. JSON is a string representation of a javascript object or an array. 
+JSON.stringify takes a regular javascript object and get the string representation
+JSON.parse takes the string representation and return a true javascript object.
+
+we can call the following functions:
+```
+// this will add a key value pair to our local storage
+- localStorage.setItem('options', 'test');
+// here we can call the item that we just placed
+- localStorage.getItem('options');
+// here we can clear our localstorage
+- localStorage.clear();
+```
+
+When we want to get a number from our localStorage we need to use the parseInt function on it, otherwise our code will break. e.g:
+```
+const num = '12';
+// this will convert to 12. We take the num var and our base (base 10 system).
+parseInt(num, 10); 
+// if num were to be a character instead of a number we could use isNaN(num) on it
+console.log(isNaN(num));
+```
+
+### WebPack
+
