@@ -247,7 +247,44 @@ Default props is an Object which refers to default props when none are given.
 eg:
 
 ```
-MyComponent.DefaultProps = {
+class MainStatefullComponent extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      options: props.options,
+    }
+  }
+
+  render() {
+    const { options } = this.state;
+    return (
+      <div>
+        {options && options.map(key => {
+          return <span>{key}</span>;
+        })}
+      </div>
+    );
+  }
+}
+
+const MyComponent = (props) {
+  return (
+    <div>
+      <h1>{props.title}</h1>
+      //conditional rendering, only show prop when provided
+      {props.subtitle && <h2>{props.subtitle}</h2>}
+    </div>
+  )
+}
+
+MyComponent.defaultProps = {
+  title: 'some default title',
   options: [],
 }
-```
+
+MainStateFullComponent.defaultProps = {
+  options: ['example one', 'example two']
+}
+
+ReactDOM.render(<MainStatefullComponent />, document.getElementById('app));
+``` 
