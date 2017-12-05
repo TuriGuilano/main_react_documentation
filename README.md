@@ -335,3 +335,70 @@ console.log(isNaN(num));
 
 ### WebPack
 
+Allows you to organize our javascript. When we run our app through webpack we will get a single file back, this is called our bundle. Is containing everything our app needs to run, code and dependencies!
+
+For example, if we have all our script files in our index.html it will take a long time for our app to run. Webpack allows us to make a single request for a single script file.
+
+Gulp and grunt can also do this, the only thing is that webpack uses a unique way to do so:
+
+Webpack is breaking up all of the files in our application into small islands, these island can then communicate using the es6 import / export methods. In other words, we can import other files, components or helper functions and use them inside the component that imported the file.
+
+Webpack also allows us to grab react from the react npm module e.g
+
+Since clientside javascript is getting more and more essentials to run our websites,
+because of our client side javascript and thirth party javascripts tools as webpack are getting more and more popular. Since we are having dosens and dosens clientside files. Webpack makes it more managable!!!
+
+> Try avoiding global modules
+
+Disadvantages of global modules are:
+- when someone wants to clone your project and help out, it might miss the dependencies since they were installed globally. So when the user npm or yarn install's it will not work since the global modules are missing.
+
+- when we install a module globally but we want the module to be used in multiple projects, we might run into problems such as versions. In project A we need version 1.15 and in project B we need version 1.16. This causes for conflics.
+
+- if you want to run a global module you need to run the script in the terminal every time you want to run it. Preferably we want to just run eg: babel scripts.
+
+> installing & configuring webpack
+Start by creating a webpack.config.js file in the root of your application. This is where webpack will be looking for the script. The file is actually a node script, so we have access to everything we would have access to inside a node.js application.
+
+inside our webpack.config.js file we need to specify a couple of things to get it up and running. We need to specify an entry point, eg: src/app.js and the output file, eg: bundle.js
+
+we do so by:
+
+```
+module.exports = {
+  // relative path
+  entry: './src/app.js,
+  output: {
+    // absolute path
+    path: '',
+    filename: 'bundle.js'
+  }
+};
+```
+The tricky part is that the path inside the output is an absolute path and is differend on each machine. So the path is from the root directory to this project. You can access the path by running the file (webpack.config.js), you do so via node by
+
+Inside webpack.config:
+```
+console.log(__dirname);
+```
+Inside your terminal
+```
+node webpack.config.js
+```
+We also need to find the public folder since we want our build to me placed inside the public folder. We can do so by requiring the node module path and specify the public folder. eg:
+
+```
+const path = require('path');
+
+module.exports = {
+  entry: './src/app.js',
+  output: {
+    path: path.join(__dirname, 'public'),
+    filename: 'bundle.js'
+  }
+};
+```
+
+Our webpack is now running. We removed all of the script tags inside our index.html and just load in the bundle.js that webpack creates for us. The bundle contains all the code needed to run our app. We can add --watch to our webpack script inside package.json so it listens for changes.
+
+
