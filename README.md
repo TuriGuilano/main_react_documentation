@@ -288,3 +288,22 @@ MainStateFullComponent.defaultProps = {
 
 ReactDOM.render(<MainStatefullComponent />, document.getElementById('app));
 ``` 
+
+
+### arrow function side note
+
+If we want to implicit return an object inside an array we have to wrap the object inside parantheses, otherwise the arrow function will treat the brackets as the function body, eg:
+```
+const check = () => ({});
+```
+
+### Lifecycle methods
+
+Class based components have acces to lifecycle methods.
+Exaples of lifecycle methods are:
+- componentDidMount
+  will fire after mounting
+- componentDidUpdate(prevProps, prevState)
+  will fire after state or prop values change.
+- componentWillUnmount()
+  allow us to add functionality when a component unmounts
