@@ -401,4 +401,95 @@ module.exports = {
 
 Our webpack is now running. We removed all of the script tags inside our index.html and just load in the bundle.js that webpack creates for us. The bundle contains all the code needed to run our app. We can add --watch to our webpack script inside package.json so it listens for changes.
 
+> We never want to import files inside of our webpack config, we just want to state our input and output there. The imports will be specified inside our entry point, so inside our app.js. e.g we want to import a utils.js which contain some functions that we need, we import the utils inside our app.js and now utils will also be bundled.
+
+> named exports
+```
+//utils.js
+const add = (a, b) => a + b;
+export { add };
+
+//app.js
+import { add } from './utils.js';
+```
+
+> default export
+
+When you grab the default export the name is not important since its the default. eg:
+```
+//utils.js
+const subtract = (a, b) => a - b;
+export default subtract;
+
+//app.js
+import anyNameWeWant from './utils.js';
+console.log(anyNameWeWant(5, 2));
+```
+For the sake of clarity we give call the imported file by the same name.
+
+This is a possibility, but what when you have two named exports and one default?
+We can do the following:
+
+```
+//utils.js
+export const add = (a, b) => a + b;
+const subtract = (a, b) => a - b;
+
+export { add, subtract as default}
+
+//app.js 
+import subtract, { add } from './utils.js';
+```
+
+
+### Compile JSX into regular JS code
+
+To compile JSX into regular js code we need to customize our webpacks's loader.
+Webpack has loaders for JSX / scss. We can cofigure our loaders inside our webpack.config.js
+
+There are two things we need to install to be able to convert jsx into regular JS.
+
+> yarn add babel-core@6.25.0 
+Babel core is similar to babel-cli, only babel-core allows you to run babel via webpack.
+
+> yarn add babel-loader@7.1.1
+webpack plugin, allows us to teach webpack how to run babel when webpack sees cetrain files
+
+After we have installed these dependencies we need to configure them in our webpack config inside our module.exports we create a new object called module. Inside the module object we can specify rules for our jsx or our scss. Rules is an array in which we can indeed specify the rules.
+
+```
+module.exports = {
+  entry: './src/app.js',
+  output: {
+    path: path.join(__dirname, 'public'),
+    filename: 'bundle.js'
+  },
+  module: {
+    rules: [
+      {
+        // which loader are we going to use
+        loader: 'babel-loader',
+        // what files do we want to run this loader on, only js, so we use a regex to // check all the files that end with .js
+        test: /\.js$/,
+        // lets us exclude a certain set of files, we dont want to run this code 
+        // on our node_modules
+        exclude: /node_modules/
+      }
+    ]
+  }
+};
+```
+
+Before we were using presets inside our terminal when running the babel-cli command. Since we are no longer doing it via babel-cli we need to specify those presents inside the root of our folder with the name .babelrc
+The file will contain the same presets:
+
+```
+{
+  "presets": 
+  [
+    "env",
+    "react"
+  ]
+};
+```
 
