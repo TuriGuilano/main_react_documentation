@@ -493,3 +493,6 @@ The file will contain the same presets:
 };
 ```
 
+### setting up scss in webpack
+
+First off, the difference between sass and scss is that sass uses no semicolons or curley brackets. And scss does use semicolons and curley brackets.
