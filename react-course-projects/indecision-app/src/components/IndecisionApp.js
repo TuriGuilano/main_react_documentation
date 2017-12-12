@@ -76,7 +76,7 @@ export default class IndecisionApp extends React.Component {
   }
 
   render() {
-    const subtitle = 'To be or not to be';
+    const subtitle = 'Choose your todo';
 
     return (
       <div>
