@@ -11,14 +11,14 @@ install babel:
 
 we also need react and env as presets to live in our project so babel cli can use it and can take advantage of it.
 
-```
+```js
 yarn add babel-preset-react@6.24.1 babel-preset-env@1.5.2
 ```
 
 start with specifying the path to our code, the code we want to compile, this lives in our src/app.js. Next up we specify the output file in the public scripts folder.
 After we have to define our presets that we want to use. react and env
 
-```
+```js
 babel src/app.js --out-file=public/scripts/app.js --presets=env, react --watch
 ```
 
@@ -35,7 +35,7 @@ See src/excercise/visibility.js
 We can pass argument default values, if no param is being passed we can set
 param equal to a string anonymous. We can also extend a class from an excisting class, this way we inherit all the functionalities and we can also overwrite functionalities if they are missing. 
 
-```
+```js
 class Person {
   constructor(name = 'Anonymous', age = 0) {
     this.name = name;
@@ -77,7 +77,7 @@ console.log(other.getDescription());
 We have to add a handler on the submit of the form and give the input field
 a name which we will call inside the method with the event method, see example:
 
-```
+```js
 class addListItem extends Component {
   addItem(e) {
     e.preventDefault();
@@ -101,7 +101,7 @@ class addListItem extends Component {
 
 To be efficient in binding functions to the components props we can call the constructor method which is a method that takes props as a param. We have to call props when we overwrite the props. Inside the constructor we call super, again with the props as param. After, inside the constructor we bind all the methods that need to have access to the props, eg:
 
-```
+```js
 constructor(props) {
   super(props);
   // by binding the addItem method we have now access to all the props.
@@ -118,7 +118,7 @@ Our component's state is just a simple object. We can update our component's sta
 
 In react you can pass functions to children by passing them as props, e.g:
 
-```
+```js
 class Parent extends Component {
   functionOne() {
     console.log('im the first function thats being passed down');
@@ -150,7 +150,7 @@ ReactDOM.render(<Parent />, document.getElementById('app));
 
 To pass data upstream we need to call the parent its function with the data we from the child component, we can do so by:
 
-```
+```js
 class Parent extends Component {
   constructor(props) {
     super(props);
@@ -228,7 +228,7 @@ Advantages:
 
 You can access props via a SFC by passing them down inside the component (when its called):
 
-```
+```js
 const user = (props) => {
   return (
     <div>
@@ -246,7 +246,7 @@ ReactDOM.render(<User name="Janno" age={27} />, document.getElementById('app));
 Default props is an Object which refers to default props when none are given. 
 eg:
 
-```
+```js
 class MainStatefullComponent extends React.Component {
   constructor(props) {
     super(props);
@@ -364,7 +364,7 @@ inside our webpack.config.js file we need to specify a couple of things to get i
 
 we do so by:
 
-```
+```js
 module.exports = {
   // relative path
   entry: './src/app.js,
@@ -387,7 +387,7 @@ node webpack.config.js
 ```
 We also need to find the public folder since we want our build to me placed inside the public folder. We can do so by requiring the node module path and specify the public folder. eg:
 
-```
+```js
 const path = require('path');
 
 module.exports = {
@@ -404,7 +404,7 @@ Our webpack is now running. We removed all of the script tags inside our index.h
 > We never want to import files inside of our webpack config, we just want to state our input and output there. The imports will be specified inside our entry point, so inside our app.js. e.g we want to import a utils.js which contain some functions that we need, we import the utils inside our app.js and now utils will also be bundled.
 
 > named exports
-```
+```js
 //utils.js
 const add = (a, b) => a + b;
 export { add };
@@ -416,7 +416,7 @@ import { add } from './utils.js';
 > default export
 
 When you grab the default export the name is not important since its the default. eg:
-```
+```js
 //utils.js
 const subtract = (a, b) => a - b;
 export default subtract;
@@ -430,7 +430,7 @@ For the sake of clarity we give call the imported file by the same name.
 This is a possibility, but what when you have two named exports and one default?
 We can do the following:
 
-```
+```js
 //utils.js
 export const add = (a, b) => a + b;
 const subtract = (a, b) => a - b;
@@ -457,7 +457,7 @@ webpack plugin, allows us to teach webpack how to run babel when webpack sees ce
 
 After we have installed these dependencies we need to configure them in our webpack config inside our module.exports we create a new object called module. Inside the module object we can specify rules for our jsx or our scss. Rules is an array in which we can indeed specify the rules.
 
-```
+```js
 module.exports = {
   entry: './src/app.js',
   output: {
@@ -483,7 +483,7 @@ module.exports = {
 Before we were using presets inside our terminal when running the babel-cli command. Since we are no longer doing it via babel-cli we need to specify those presents inside the root of our folder with the name .babelrc
 The file will contain the same presets:
 
-```
+```js
 {
   "presets": 
   [
@@ -492,4 +492,150 @@ The file will contain the same presets:
   ]
 };
 ```
+
+### Scope components
+
+
+### Source maps with Webpack
+
+Source map allows us to track down an error to its own file and on which line.
+Which makes debugging a lot easier. We can set this up by adding a line inside our webpack.config.js file.
+
+note ** everytime you make changes you need to rebuild your webpack.
+
+```js
+const path = require('path');
+
+module.exports = {
+  entry: './src/app.js',
+  output: {
+    path: path.join(__dirname, 'public'),
+    filename: 'bundle.js'
+  },
+  module: {
+    rules: [{
+      loader: 'babel-loader',
+      test: /\.js$/,
+      exclude: /node_modules/
+    }]
+  },
+  devtool: 'cheap-module-eval-source-map'
+};
+```
+
+### webpack dev server
+To add the webpack dev server to your project you run the command 
+```
+yarn add webpack-dev-server@2.5.1
+```
+We just need one property of all the possibilities of webpack's dev server to take advantage of the server, this is called contentBase. contentBase tells us where to find our public folder that needs to be served.
+
+To run our app in development modes on de devServer we actually dont need the bundle.js file. We can delete it and our app will still run since webpack is server our app from its memory and just serving index.js not the bundle. When we switch over to production we do want our bundle.js file, we can create the file by running:
+
+```
+yarn run build
+```
+
+
+### es6 class properties
+
+### passing children to component
+
+When passing children to a react component, ideally we want to do it in the following manner:
+
+```js
+const Layout = (props) => {
+  return (
+    <div>
+      <p>Header</p>
+      {props.children}
+      <p>Footer</p>
+    </div>
+  );
+}
+
+ReactDOM.render((
+  <Layout>
+    <div>
+      <h1>This is my Title</h1>
+      <p>This is my paragraph</p>
+    </div>
+  </Layout>
+), document.getElementById('app'));
+```
+
+This way, instead of passing jsx as displayed in the example above, we can pass in a react modal. We can access the reactmodal calling props.children.
+
+The reactmodal has a method called onRequestClose. This allows the user to use the escape key or clicking next to de modal to close it. Syntax:
+
+```js
+<Modal
+  isOpten{!!props.selectedOption}
+  onRequestClose={props.handleCloseModal}
+  contentLabel={Select your option}
+>
+  <h2>Content of modal</h2>
+</Modal>
+```
+
+### configure webpack with css rules
+
+To make sure we can use scss we have to add some rules inside our webpack.config.js
+We use the following dependencies: 
+- style-loader
+- css-loader
+- sass-loader
+
+We also have to import the package normalize.css. This is for all the css resets in different browsers.
+
+webpack.config.js
+```js
+/ let webpack know the entry point (src/app.js) and the output file
+const path = require('path');
+// path to current location
+console.log(path.join(__dirname, 'public'));
+// all our configurations
+module.exports = {
+  entry: './src/app.js',
+  output: {
+    path: path.join(__dirname, 'public'),
+    filename: 'bundle.js'
+  },
+  module: {
+    rules: [{
+      loader: 'babel-loader',
+      test: /\.js$/,
+      exclude: /node_modules/
+    }, 
+    {
+      test: /\.s?css$/,
+      use: [
+        'style-loader',
+        'css-loader',
+        'sass-loader'
+      ]
+    }]
+  },
+  devtool: 'cheap-module-eval-source-map',
+  devServer: {
+    contentBase: path.join(__dirname, 'public')
+  }
+};
+```
+
+app.js
+
+```js
+import React from 'react';
+import ReactDOM from 'react-dom';
+import validator from 'validator';
+import IndecisionApp from './components/IndecisionApp';
+import 'normalize.css/normalize.css';
+import './styles/style.scss';
+
+ReactDOM.render((
+  <IndecisionApp />
+), document.getElementById('app'));
+```
+
 

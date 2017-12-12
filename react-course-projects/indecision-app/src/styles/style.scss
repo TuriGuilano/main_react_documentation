@@ -1,0 +1,5 @@
+// when we import partials we leave off the _ and the extention so _base.scss would be base
+@import './base/settings';
+@import './base/base';
+@import './components/container';
+@import './components/header';

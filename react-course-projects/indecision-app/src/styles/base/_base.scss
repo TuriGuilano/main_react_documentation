@@ -1,0 +1,10 @@
+// set the base for a 10 count system, same as pixels uses. 1.6rem is now 16px
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: $m-size;
+  background: $darkBlue;
+}
