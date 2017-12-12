@@ -8,3 +8,12 @@ body {
   font-size: $m-size;
   background: $darkBlue;
 }
+
+button {
+  cursor: pointer;
+
+}
+
+button:disabled {
+  cursor: default;
+}

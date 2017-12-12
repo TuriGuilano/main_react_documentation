@@ -1,5 +1,10 @@
 // when we import partials we leave off the _ and the extention so _base.scss would be base
 @import './base/settings';
 @import './base/base';
+@import './components/button';
 @import './components/container';
 @import './components/header';
+@import './components/option';
+@import './components/add-option';
+@import './components/widgets';
+@import './components/modal';
