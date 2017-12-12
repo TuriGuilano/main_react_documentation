@@ -573,7 +573,7 @@ The reactmodal has a method called onRequestClose. This allows the user to use t
 <Modal
   isOpten{!!props.selectedOption}
   onRequestClose={props.handleCloseModal}
-  contentLabel={Select your option}
+  contentLabel={Select your optwwion}
 >
   <h2>Content of modal</h2>
 </Modal>
