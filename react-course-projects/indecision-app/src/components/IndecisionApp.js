@@ -1,60 +1,60 @@
-import React from 'react';
-import AddOption from './AddOption';
-import Header from './Header';
-import Action from './Action';
-import Options from './Options';
-import OptionModal from './OptionModal';
+import React from "react";
+import AddOption from "./AddOption";
+import Header from "./Header";
+import Action from "./Action";
+import Options from "./Options";
+import OptionModal from "./OptionModal";
 
 export default class IndecisionApp extends React.Component {
   state = {
     options: [],
-    selectedOption: undefined,
-  }
+    selectedOption: undefined
+  };
 
   handleDeleteOptions = () => {
     this.setState(() => ({ options: [] }));
-  }
+  };
 
-  handleDeleteOption = (optionToRemove) => {
-    this.setState((prevState) => ({
+  handleDeleteOption = optionToRemove => {
+    this.setState(prevState => ({
       options: prevState.options.filter(option => optionToRemove !== option)
     }));
-  }
+  };
 
   handlePick = () => {
     const randomNum = Math.floor(Math.random() * this.state.options.length);
     const option = this.state.options[randomNum];
-    this.setState(() => ({ 
-      selectedOption: option 
+    this.setState(() => ({
+      selectedOption: option
     }));
-  }
+  };
 
-  handleAddOption = (option) => {
+  handleAddOption = option => {
     if (!option) {
-      return 'Enter valid value to add item';
+      return "Enter valid value to add item";
     } else if (this.state.options.indexOf(option) > -1) {
-      return 'This option already exists';
+      return "This option already exists";
     }
 
-    this.setState((prevState) => ({
+    this.setState(prevState => ({
       options: prevState.options.concat(option)
     }));
-  }
+  };
 
   handleClosingModal = () => {
     this.setState(() => ({
       selectedOption: undefined
     }));
-  }
+  };
 
   componentDidMount() {
     try {
-      const json = localStorage.getItem('options');
+      const json = localStorage.getItem("options");
       const options = JSON.parse(json);
       if (options) {
         // set options in state equal to options, the shorthand def is displayed below,
         // this is the same as ({ options: options })
-        this.setState(() => ({ options }))
+        this.setState(() => ({ options }));
       }
     } catch (e) {
       // Do nothing at all.
@@ -66,17 +66,17 @@ export default class IndecisionApp extends React.Component {
       // creates a string representation which we can store in localStorage
       const json = JSON.stringify(this.state.options);
       // store it in localStorage
-      localStorage.setItem('options', json);
-      console.log('save data', localStorage.getItem('options')); 
+      localStorage.setItem("options", json);
+      console.log("save data", localStorage.getItem("options"));
     }
   }
 
   componentWillUnmount() {
-    console.log('component will unmount');
+    console.log("component will unmount");
   }
 
   render() {
-    const subtitle = 'Choose your todo';
+    const subtitle = "Selecteer een van de Todos";
 
     return (
       <div>
@@ -92,12 +92,10 @@ export default class IndecisionApp extends React.Component {
               handleDeleteOptions={this.handleDeleteOptions}
               handleDeleteOption={this.handleDeleteOption}
             />
-            <AddOption
-              handleAddOption={this.handleAddOption}
-            />
+            <AddOption handleAddOption={this.handleAddOption} />
           </div>
         </div>
-        <OptionModal 
+        <OptionModal
           selectedOption={this.state.selectedOption}
           handleClosingModal={this.handleClosingModal}
         />
